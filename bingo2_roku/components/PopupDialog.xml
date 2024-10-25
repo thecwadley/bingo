@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="PopupDialog" extends="Group">
+    <children>
+        <Rectangle
+            id="background"
+            width="500"
+            height="300"
+            color="0x000000AA"
+            translation="[390, 200]"
+            />
+        <Label
+            id="popupLabel"
+            text="Enter pairing code"
+            width="480"
+            height="100"
+            horizAlign="center"
+            vertAlign="center"
+            translation="[400, 200]"
+            color="0xFFFFFFFF"
+            />
+        <Label
+            id="patternLabel"
+            text=""
+            width="480"
+            height="100"
+            horizAlign="center"
+            vertAlign="center"
+            translation="[400, 250]"
+            color="0xFFFFFFFF"
+            />
+        <Label
+            id="arrowsLabel"
+            text="Press the arrows to enter the code."
+            width="480"
+            height="100"
+            horizAlign="center"
+            vertAlign="center"
+            translation="[400, 300]"
+            color="0xFFFFFFFF"
+            />
+        <Label
+            id="okLabel"
+            text="Press 'OK' to confirm."
+            width="480"
+            height="100"
+            horizAlign="center"
+            vertAlign="center"
+            translation="[400, 325]"
+            color="0xFFFFFFFF"
+            />
+        <Label
+            id="replayLabel"
+            text="Press 'replay' to try again."
+            width="480"
+            height="100"
+            horizAlign="center"
+            vertAlign="center"
+            translation="[400, 350]"
+            color="0xFFFFFFFF"
+            />
+        <Label
+            id="backLabel"
+            text="Press 'back' to close."
+            width="480"
+            height="100"
+            horizAlign="center"
+            vertAlign="center"
+            translation="[400, 375]"
+            color="0xFFFFFFFF"
+            />
+    </children>
+    <script type="text/brightscript" uri="pkg:/components/PopupDialog.brs"/>
+</component>

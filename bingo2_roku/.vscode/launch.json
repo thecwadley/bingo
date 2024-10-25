@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "brightscript",
+        "request": "launch",
+        "name": "Launch on Roku",
+        "host": "192.168.1.8",
+        "password": "2747",
+        "rootDir": "${workspaceRoot}",
+        "files": [
+            "${workspaceRoot}/Makefile",
+            "${workspaceRoot}/manifest",
+            "${workspaceRoot}/source/**/*.brs",
+            "${workspaceRoot}/components/**/*.xml",
+            "${workspaceRoot}/components/**/*.brs",
+        ]
+      }
+    ]
+  }

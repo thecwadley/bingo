@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="BingoScreen" extends="Scene">
+    <script type="text/brightscript" uri="pkg:/source/BingoScreen.brs" />
+    <script type="text/brightscript" uri="pkg:/source/BingoGame.brs" />
+    <script type="text/brightscript" uri="pkg:/source/bslib.brs" />
+    <children>
+        <Label id="prev2" text="Testing" width="1280" height="100" horizAlign="center" vertAlign="center" />
+        <Label id="prev1" text="Testing" width="1280" height="100" horizAlign="center" vertAlign="center" />
+        <Label id="current" text="Testing" width="1280" height="100" horizAlign="center" vertAlign="center" />
+    </children>
+</component>
+<!--//# sourceMappingURL=./bingoscreen.xml.map -->

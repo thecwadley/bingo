@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="BingoScene" extends="Scene"> 
+	<children>
+	<Label id="prev2" 
+		text="Testing"
+		width="1280" 
+		height="100" 
+		horizAlign="center"
+		vertAlign="center"
+		/>
+	<Label id="prev1" 
+		text="Testing"
+		width="1280" 
+		height="100" 
+		horizAlign="center"
+		vertAlign="center"
+		/>
+	<Label id="prev0" 
+		text="Testing"
+		width="1280" 
+		height="100" 
+		horizAlign="center"
+		vertAlign="center"
+		/>
+	<Label id="gameID" 
+		text="123456"
+		width="1280" 
+		height="100" 
+		horizAlign="center"
+		vertAlign="center"
+		/>
+    </children>
+<!-- BrightScript Portion -->
+  <script type="text/brightscript" uri="../components/Bingo.brs"/>
+  <script type="text/brightscript" uri="pkg:/components/BingoScene.brs"/>
+</component>
