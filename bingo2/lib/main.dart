@@ -1,4 +1,4 @@
-import 'package:bingo2/firebase/bingo_repository.dart';
+import 'package:bingo2/firebase/bingo_repository_old.dart';
 import 'package:bingo2/landing_page.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,7 @@ Future<void> main() async {
   runApp(
     MaterialApp(
       home: ChangeNotifierProvider(
-        create: (context) => BingoRepository(),
+        create: (context) => BingoService(),
         child: const LandingPage(),
       )
     ),
