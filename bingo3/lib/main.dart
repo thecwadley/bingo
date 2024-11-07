@@ -1,4 +1,5 @@
 import 'package:bingo3/providers/bingo_provider.dart';
+import 'package:bingo3/providers/leaderboard_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,15 +20,24 @@ Future<void> main() async {
     );
   }
 
-  runApp(MaterialApp(
-    title: 'Bingo',
-    theme: ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      useMaterial3: true,
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => BingoProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LeaderboardProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Bingo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const LandingPage(),
+      ),
     ),
-    home: ChangeNotifierProvider(
-      create: (context) => BingoProvider(),
-      child: const LandingPage(),
-    ),
-  ));
+  );
 }

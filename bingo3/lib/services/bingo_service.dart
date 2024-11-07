@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 import '../models/bingo_game.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -33,7 +35,9 @@ class BingoService {
       ref.set(bingoGameAsMap).then((_) {
         // TODO: currently nothing needed to do on success. Should probably change later.
       }).catchError((error) {
-        print(error);
+        if (kDebugMode) {
+          print(error);
+        }
       });
     }
   }

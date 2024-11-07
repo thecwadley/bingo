@@ -1,10 +1,10 @@
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:bingo3/providers/bingo_provider.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:bingo3/providers/leaderboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../widgets/knock_code_display.dart';
+import '../widgets/side_options_drawer.dart';
 
 class BingoPage extends StatefulWidget {
   const BingoPage({super.key});
@@ -14,14 +14,6 @@ class BingoPage extends StatefulWidget {
 }
 
 class _BingoPageState extends State<BingoPage> with WidgetsBindingObserver {
-  IconData intToArrowIcon(int code) {
-    switch (code) {
-      case 0: return Icons.arrow_back_rounded;
-      case 1: return Icons.arrow_upward_rounded;
-      case 2: return Icons.arrow_forward_rounded;
-      default: return Icons.arrow_downward_rounded;
-    }
-  }
 
   @override
   void initState() {
@@ -51,71 +43,15 @@ class _BingoPageState extends State<BingoPage> with WidgetsBindingObserver {
     final prev2 = context.watch<BingoProvider>().prev2;
     final lostConnection = context.watch<BingoProvider>().lostConnection;
     final isLocalGame = context.watch<BingoProvider>().isLocalGame;
+    final isSignedIn = context.watch<LeaderboardProvider>().signedInMode;
     final knockCode = context.watch<BingoProvider>().knockCode;
 
     return Scaffold(
       appBar: AppBar(),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const NetworkImage("https://static3.depositphotos.com/1005547/235/i/450/depositphotos_2357114-stock-photo-bingo-ball-background.jpg"),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                ),
-                color: Colors.blue,
-              ),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                child: const Text(
-                  "Bingo Manager",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            ListTile(
-              title: const Text('Play Round'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Pair Roku TV'),
-              onTap: () {
-                context.read<BingoProvider>().startConnection();
-                Navigator.pop(context);
-                showKnockCode(context, knockCode);
-              },
-            ),
-            if (!isLocalGame) ListTile(
-              title: const Text('Unpair Roku TV'),
-              onTap: () {
-                context.read<BingoProvider>().stopConnection();
-              },
-            ),
-            ListTile(
-              title: const Text('Manage Leaderboards'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Take Attendance'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Add a Bingo'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Sign Out'),
-              onTap: () {},
-            ),
-          ],
-        ),
+      drawer: SideOptionsDrawer(
+        isLocalGame: isLocalGame,
+        isSignedIn: isSignedIn,
+        knockCode: knockCode,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -232,8 +168,13 @@ class _BingoPageState extends State<BingoPage> with WidgetsBindingObserver {
                           onPressed: () {
                             context.read<BingoProvider>().stopConnection();
                             context.read<BingoProvider>().startConnection();
-                            print(knockCode);
-                            showKnockCode(context, knockCode);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  duration: const Duration(minutes: 3),
+                                  backgroundColor: Colors.black,
+                                  content: KnockCodeDisplay(knockCode: knockCode,),
+                                )
+                            );
                           },
                           child: const Text("Re-Pair"),
                         ),
@@ -246,48 +187,6 @@ class _BingoPageState extends State<BingoPage> with WidgetsBindingObserver {
           ),
         ],
       ),
-    );
-  }
-
-  void showKnockCode(BuildContext context, List<int> knockCode) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(minutes: 3),
-          backgroundColor: Colors.black,
-          content: Center(
-            child: SizedBox(
-              height: 200, // Set the height for the horizontal list
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(0,0,0,20.0),
-                    child: Text(
-                      "(1) Open the PlayBingo app on your Roku TV.\n(2) Press the menu/star (*) button on your Roku remote.\n(3) Enter the following combination using the arrow keys:",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      for (int code in knockCode) Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Icon(
-                          intToArrowIcon(code),
-                          size: 20, // Set icon size
-                          color: Colors.white, // You can customize the color
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        )
     );
   }
 }

@@ -1,6 +1,9 @@
 import 'package:bingo3/services/auth_service.dart';
 import 'package:bingo3/screens/bingo_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/leaderboard_provider.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -107,6 +110,17 @@ class _AuthPageState extends State<AuthPage> {
                         : 'Already have an account? Login',
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8), // const EdgeInsets.symmetric(vertical: 8),
+                  child: TextButton(
+                    onPressed: () {
+                      context.read<LeaderboardProvider>().setSignedIn(signedInMode: false);
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => const BingoPage()));
+                    },
+                    child: const Text("Or, continue as guest"),
+                  ),
+                ),
               ],
             ),
           ),
@@ -133,8 +147,9 @@ class _AuthPageState extends State<AuthPage> {
     }
 
     if (message!.contains('Success') && context.mounted) {
+      context.read<LeaderboardProvider>().setSignedIn(signedInMode: true, userEmail: _emailController.text); // TODO: can the email controller be changed after submission?
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => BingoPage()));
+          MaterialPageRoute(builder: (context) => const BingoPage()));
     } else if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
